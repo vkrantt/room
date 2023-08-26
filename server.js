@@ -44,7 +44,7 @@ const server = app.listen(port, () => {
 var io = new Server(server, {
   pingTimeOut: 60000,
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://room-v1.netlify.app",
   },
 });
 
