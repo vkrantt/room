@@ -9,6 +9,7 @@ import chatRoutes from "./api/routes/chat.route.js";
 import messageRoutes from "./api/routes/message.route.js";
 // import SocketIO from "socket.io";
 import { Server, Socket } from "socket.io";
+import { BASE_URL } from "./config.js";
 
 config({ path: ".env" });
 
@@ -44,7 +45,7 @@ const server = app.listen(port, () => {
 var io = new Server(server, {
   pingTimeOut: 60000,
   cors: {
-    origin: "https://room-v1.netlify.app",
+    origin: BASE_URL,
   },
 });
 
