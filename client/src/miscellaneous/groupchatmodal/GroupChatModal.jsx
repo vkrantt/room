@@ -17,7 +17,6 @@ import React, { useState } from "react";
 import { ChatState } from "../../context/ChatProvider";
 import axios from "axios";
 import { BASE_URL } from "../../config/config";
-import ChatLoading from "../../components/ChatLoading";
 import UserListItem from "../../components/avatar/UserListItem";
 import UserBadgeItem from "../../components/avatar/UserBadgeItem";
 
@@ -57,12 +56,12 @@ const GroupChatModal = ({ children }) => {
     }
   };
 
-  const handleDelete = (user) => {
-    setSelectedUsers(selectedUsers.filter((sel) => sel._id !== user._id));
+  const handleDelete = (deluser) => {
+    setSelectedUsers(selectedUsers.filter((sel) => sel._id !== deluser._id));
   };
 
-  const handleAddUser = (user) => {
-    if (selectedUsers.includes(user)) {
+  const handleAddUser = (adduser) => {
+    if (selectedUsers.includes(adduser)) {
       toast({
         title: "User already added.",
         status: "warning",
@@ -70,7 +69,7 @@ const GroupChatModal = ({ children }) => {
       });
       return;
     }
-    setSelectedUsers([...selectedUsers, user]);
+    setSelectedUsers([...selectedUsers, adduser]);
   };
 
   const handleSubmit = async () => {
@@ -144,11 +143,11 @@ const GroupChatModal = ({ children }) => {
 
             {/* selectd users */}
             <Box width="100%" display="flex" flexWrap="wrap">
-              {selectedUsers.map((user) => (
+              {selectedUsers.map((selUser) => (
                 <UserBadgeItem
-                  key={user._id}
-                  user={user}
-                  handleFunction={() => handleDelete(user)}
+                  key={selUser._id}
+                  user={selUser}
+                  handleFunction={() => handleDelete(selUser)}
                 />
               ))}
             </Box>
@@ -157,11 +156,11 @@ const GroupChatModal = ({ children }) => {
               ? " Loading..."
               : searchResults
                   ?.slice(0, 5)
-                  .map((user) => (
+                  .map((u) => (
                     <UserListItem
-                      key={user._id}
-                      user={user}
-                      handleFunction={() => handleAddUser(user)}
+                      key={u._id}
+                      user={u}
+                      handleFunction={() => handleAddUser(u)}
                     />
                   ))}
           </ModalBody>

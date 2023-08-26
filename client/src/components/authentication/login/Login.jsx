@@ -9,9 +9,10 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../../../config/config";
 import { sendError } from "../../../handlers/errorHandler";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
   const toast = useToast();
@@ -19,6 +20,13 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("room_token"))) {
+      history.push("/chats");
+    }
+  });
 
   const handleShowPass = () => {
     setShow(!show);

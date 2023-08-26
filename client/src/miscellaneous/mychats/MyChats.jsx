@@ -35,8 +35,6 @@ const MyChats = ({ fetchAgain }) => {
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("room_token")));
     fetchChat();
-
-    console.log(selectedChat);
   }, [fetchAgain]);
 
   return (
@@ -44,10 +42,8 @@ const MyChats = ({ fetchAgain }) => {
       display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
       flexDir="column"
       alignItems="center"
-      p={3}
       width={{ base: "100%", md: "31%" }}
       borderRadius="lg"
-      borderWidth="1px"
     >
       <Box
         pb={3}
@@ -80,7 +76,7 @@ const MyChats = ({ fetchAgain }) => {
         borderRadius="lg"
         overflowY="hidden"
       >
-        {loading && <ChatLoading />}
+        {/* {loading && <ChatLoading />} */}
         {!loading && chats.length === 0 ? (
           <Box display="flex" justifyContent="center" margin="10px 0">
             Search people and chat
@@ -103,17 +99,21 @@ const MyChats = ({ fetchAgain }) => {
                 display="flex"
                 alignItems="center"
               >
-                <Avatar
-                  src={getSenderPic(loggedUser, chat.users)}
-                  alt={getSenderPic(loggedUser, chat.users)}
-                  me={2}
-                  width="35px"
-                  height="35px"
-                />
+                {!chat.isGroupChat && (
+                  <Avatar
+                    src={getSenderPic(loggedUser, chat.users)}
+                    alt={getSenderPic(loggedUser, chat.users)}
+                    me={2}
+                    width="35px"
+                    height="35px"
+                  />
+                )}
                 <Text display="flex" flexDir="column">
-                  {!chat.isGroupChat
-                    ? getSender(loggedUser, chat.users)
-                    : chat.chatName}
+                  <Text style={{ fontWeight: "bold" }}>
+                    {!chat.isGroupChat
+                      ? getSender(loggedUser, chat.users)
+                      : chat.chatName}
+                  </Text>
                   {chat?.latestMessage ? (
                     <span style={{ fontSize: "11px" }}>
                       <b style={{ paddingRight: "5px" }}>

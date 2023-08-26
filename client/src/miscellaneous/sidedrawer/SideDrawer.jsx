@@ -181,7 +181,7 @@ const SideDrawer = () => {
             </MenuButton>
             <MenuList>
               <ProfileModal user={user}>
-                <MenuItem>My Profile</MenuItem>
+                <MenuItem>Profile</MenuItem>
               </ProfileModal>
               <MenuDivider />
               <MenuItem onClick={logoutHandler}>Logout</MenuItem>
@@ -218,11 +218,11 @@ const SideDrawer = () => {
               <ChatLoading />
             ) : (
               <span>
-                {searchResult.map((user) => (
+                {searchResult.map((newUser) => (
                   <UserListItem
-                    key={user._id}
-                    user={user}
-                    handleFunction={() => accessChat(user._id)}
+                    key={newUser._id}
+                    user={newUser}
+                    handleFunction={() => accessChat(newUser._id)}
                   />
                 ))}
               </span>

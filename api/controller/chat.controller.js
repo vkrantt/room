@@ -6,57 +6,48 @@ import { sendError } from "../handlers/handlers.js";
 // create and access chat
 export const accessChat = asyncHandler(async (req, res) => {
   const { userId } = req.body;
+
   if (!userId) {
-    res.sendStatus(400);
-    return sendError(res, "UserId param not sent with request");
+    console.log("UserId param not sent with request");
+    return res.sendStatus(400);
   }
-  try {
-    // find the chat if exists
-    let isChat = await Chat.find({
+
+  var isChat = await Chat.find({
+    isGroupChat: false,
+    $and: [
+      { users: { $elemMatch: { $eq: req.user._id } } },
+      { users: { $elemMatch: { $eq: userId } } },
+    ],
+  })
+    .populate("users", "-password")
+    .populate("latestMessage");
+
+  isChat = await User.populate(isChat, {
+    path: "latestMessage.sender",
+    select: "name pic email",
+  });
+
+  if (isChat.length > 0) {
+    res.send(isChat[0]);
+  } else {
+    // new create
+    var chatData = {
+      chatName: "sender",
       isGroupChat: false,
-      $and: [
-        {
-          users: {
-            $elemMatch: { $eq: req.user._id },
-          },
-          users: {
-            $elemMatch: { $eq: userId },
-          },
-        },
-      ],
-    })
-      .populate("users", "-password")
-      .populate("latestMessage");
+      users: [req.user._id, userId],
+    };
 
-    isChat = await User.populate(isChat, {
-      path: "latestMessage.sender",
-      select: "name picture email",
-    });
-
-    if (isChat.length > 0) {
-      res.send(isChat[0]);
-    } else {
-      // create the new chat
-      let chatData = {
-        chatName: "sender",
-        isGroupChat: false,
-        users: [req.user._id, userId],
-      };
-
+    try {
       const createdChat = await Chat.create(chatData);
-
-      const fullChat = await Chat.findOne({ _id: createdChat._id }).populate(
+      const FullChat = await Chat.findOne({ _id: createdChat._id }).populate(
         "users",
         "-password"
       );
-
-      res.status(200).send(fullChat);
+      res.status(200).json(FullChat);
+    } catch (error) {
+      res.status(400);
+      throw new Error(error.message);
     }
-  } catch (error) {
-    res.status(500).json({
-      status: "server error",
-      error: error,
-    });
   }
 });
 
