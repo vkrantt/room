@@ -13,6 +13,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Spinner,
+  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -211,7 +212,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
 
             <FormControl display="flex">
               <Input
-                placeholder="rename group..."
+                placeholder="Rename group..."
                 mb={3}
                 value={groupChatName}
                 onChange={(e) => setGroupChatName(e.target.value)}
@@ -248,7 +249,8 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
             )}
           </ModalBody>
 
-          <ModalFooter>
+          <ModalFooter display="flex" justifyContent="space-between">
+            <Text>{selectedChat.users.length} members</Text>
             <Button mr={3} onClick={() => handleRemove(user)} colorScheme="red">
               Leave group
             </Button>

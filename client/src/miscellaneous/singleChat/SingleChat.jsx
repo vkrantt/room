@@ -24,6 +24,8 @@ import Lottie from "react-lottie";
 import animationData from "../../asset/animation_llrv8nzg.json";
 import nochat from "../../asset/nochat.png";
 import { BiSolidPaperPlane } from "react-icons/bi";
+import { BsEmojiSmile } from "react-icons/bs";
+import Picker from "emoji-picker-react";
 
 const defaultOptions = {
   loop: true,
@@ -43,6 +45,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const toast = useToast();
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [isEmojiVisible, setIsEmojiVisible] = useState(false);
+  const [currentEmoji, setCurrentEmoji] = useState(null);
 
   const {
     user,
@@ -65,6 +69,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   }, []);
 
   const sendMessage = async () => {
+    setIsEmojiVisible(false);
     if (newMessage) {
       socket.emit("stop typing", selectedChat._id);
       // call api
@@ -192,12 +197,16 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
             {!selectedChat.isGroupChat ? (
               <>
-                {getSender(user, selectedChat.users)}
+                <Text fontSize="20px" fontWeight="700">
+                  {getSender(user, selectedChat.users)}
+                </Text>
                 <ProfileModal user={getSenderFull(user, selectedChat.users)} />
               </>
             ) : (
               <>
-                {selectedChat.chatName.toUpperCase()}
+                <Text fontSize="20px" fontWeight="700">
+                  {selectedChat.chatName.toUpperCase()}
+                </Text>
                 <UpdateGroupChatModal
                   fetchAgain={fetchAgain}
                   setFetchAgain={setFetchAgain}
@@ -247,7 +256,39 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               ) : (
                 <></>
               )}
+
+              {isEmojiVisible && (
+                <div
+                  style={{
+                    zIndex: "100",
+                    width: "max-content",
+                    position: "absolute",
+                    bottom: "50px",
+                  }}
+                >
+                  <Picker
+                    onEmojiClick={(e) => {
+                      setNewMessage((m) => m + e.emoji);
+                      setIsEmojiVisible(!isEmojiVisible);
+                    }}
+                  />
+                </div>
+              )}
               <Box display="flex">
+                {/* <EmojiPicker /> */}
+                <Button
+                  type="button"
+                  onClick={() => setIsEmojiVisible(!isEmojiVisible)}
+                  borderRadius="100%"
+                  marginRight="10px"
+                  width="20px"
+                  heigh="20px"
+                >
+                  <span style={{ fontSize: "20px" }}>
+                    <BsEmojiSmile />
+                  </span>
+                </Button>
+
                 <Input
                   variant="filled"
                   bg="#e0e0e0"

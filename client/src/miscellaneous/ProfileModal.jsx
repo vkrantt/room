@@ -1,5 +1,4 @@
 import {
-  Button,
   IconButton,
   Image,
   Modal,
@@ -49,6 +48,7 @@ const ProfileModal = ({ user, children }) => {
               src={user.picture}
               alt={user.name}
               border="1px solid"
+              objectFit="cover"
             />
 
             <Text fontWeight="bold" mt="1rem">
@@ -56,11 +56,7 @@ const ProfileModal = ({ user, children }) => {
             </Text>
           </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
+          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
     </>

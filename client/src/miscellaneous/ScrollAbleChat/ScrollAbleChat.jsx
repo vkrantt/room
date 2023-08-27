@@ -22,10 +22,13 @@ const ScrollAbleChat = ({ messages }) => {
                 <Avatar
                   mt="7px"
                   mr={1}
-                  size="sm"
+                  size="xs"
                   cursor="pointer"
                   name={m.sender.name}
                   src={m.sender.picture}
+                  width="20px"
+                  height="20px"
+                  fontSize="10px"
                 />
               </Tooltip>
             )}

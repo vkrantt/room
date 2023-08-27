@@ -115,35 +115,45 @@ const SideDrawer = () => {
   return (
     <>
       <Box
-        style={{ display: "flex", justifyContent: "space-between" }}
-        alignItems="center"
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
         w="100%"
-        p="5px 10px 5pxd 10px "
+        p="5px 10px 5px 10px "
         boxShadow="md"
       >
-        <Tooltip label="Search users to chat" aria-label="A tooltip">
-          <Button variant="none" onClick={onOpen}>
-            <span style={{ fontSize: "20px" }}>
-              <BiSearch />
-            </span>
-            <Text display={{ base: "none", md: "flex" }} px="4">
-              Search User
-            </Text>
-          </Button>
-        </Tooltip>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Tooltip label="Search users to chat" aria-label="A tooltip">
+            <Button
+              variant="none"
+              style={{ margin: 0, padding: 0 }}
+              onClick={onOpen}
+            >
+              <span colorScheme="blue" style={{ fontSize: "22px" }}>
+                <BiSearch />
+              </span>
+              <Text display={{ base: "none", md: "flex" }} px="4">
+                Search User
+              </Text>
+            </Button>
+          </Tooltip>
 
-        <Text fontSize="2xl" fontFamily="'Pacifico', cursive">
-          room
-        </Text>
+          <Text fontSize="2xl" mb={2} fontFamily="'Pacifico', cursive">
+            room
+          </Text>
+        </div>
 
         <div>
           <Menu>
-            <MenuButton p={1}>
-              <Badge ml="1" colorScheme="red">
-                {notifications.length}
-              </Badge>
-
-              <FiBell />
+            <MenuButton>
+              <Text style={{ display: "flex" }}>
+                <FiBell />
+                <Badge colorScheme="red" style={{ borderRadius: "100%" }}>
+                  {notifications.length}
+                </Badge>
+              </Text>
             </MenuButton>
             <MenuList p={2}>
               {!notifications.length && "No notification"}
