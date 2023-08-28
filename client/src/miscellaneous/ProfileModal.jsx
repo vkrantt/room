@@ -1,4 +1,5 @@
 import {
+  Avatar,
   IconButton,
   Image,
   Modal,
@@ -42,13 +43,11 @@ const ProfileModal = ({ user, children }) => {
             justifyContent="center"
             alignItems="center"
           >
-            <Image
-              borderRadius="full"
-              boxSize="150px"
+            <Avatar
+              size="2xl"
               src={user.picture}
-              alt={user.name}
-              border="1px solid"
-              objectFit="cover"
+              name={user.name}
+              border="3px solid #000"
             />
 
             <Text fontWeight="bold" mt="1rem">

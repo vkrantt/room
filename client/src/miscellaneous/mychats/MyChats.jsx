@@ -43,7 +43,7 @@ const MyChats = ({ fetchAgain }) => {
       flexDir="column"
       alignItems="center"
       width={{ base: "100%", md: "31%" }}
-      borderRadius="lg"
+      borderRadius="3px"
     >
       <Box
         pb={3}
@@ -69,11 +69,9 @@ const MyChats = ({ fetchAgain }) => {
       <Box
         flexDir="column"
         display="flex"
-        p={3}
-        bg="#f8f8f8"
         width="100%"
         h="100%"
-        borderRadius="lg"
+        borderRadius="3px"
         overflowY="hidden"
       >
         {/* {loading && <ChatLoading />} */}
@@ -90,11 +88,10 @@ const MyChats = ({ fetchAgain }) => {
               <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"
-                bg={selectedChat === chat ? "#38B2AC" : "#E8e8e8"}
+                bg={selectedChat === chat ? "var(--primary)" : "#F5F5F9"}
                 color={selectedChat === chat ? "#fff" : "#000"}
-                px={3}
-                py={2}
-                borderRadius="lg"
+                p={3}
+                borderRadius="3px"
                 key={chat._id}
                 display="flex"
                 alignItems="center"
@@ -102,7 +99,7 @@ const MyChats = ({ fetchAgain }) => {
                 {!chat.isGroupChat && (
                   <Avatar
                     src={getSenderPic(loggedUser, chat.users)}
-                    alt={getSenderPic(loggedUser, chat.users)}
+                    name={getSender(loggedUser, chat.users)}
                     me={2}
                     width="35px"
                     height="35px"

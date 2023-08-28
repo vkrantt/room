@@ -145,18 +145,21 @@ const SideDrawer = () => {
           </Text>
         </div>
 
-        <div>
+        <div style={{ display: "flex", alignItems: "center" }}>
           <Menu>
             <MenuButton>
               <Text style={{ display: "flex" }}>
-                <FiBell />
-                <Badge colorScheme="red" style={{ borderRadius: "100%" }}>
-                  {notifications.length}
-                </Badge>
+                <FiBell fontSize="20px" />
+
+                {notifications.length > 0 && (
+                  <Badge colorScheme="none" style={{ borderRadius: "100%" }}>
+                    <p style={{ color: "red" }}>{notifications.length}</p>
+                  </Badge>
+                )}
               </Text>
             </MenuButton>
             <MenuList p={2}>
-              {!notifications.length && "No notification"}
+              {!notifications.length && <p>No notification</p>}
 
               {notifications.map((n) => (
                 <MenuItem
@@ -168,11 +171,35 @@ const SideDrawer = () => {
                     );
                   }}
                 >
-                  {n.chat.isGroupChat
-                    ? `New Message in ${n.chat.chayName}`
-                    : `${getSender(user, n.chat.users)} just messaged you`}
+                  {n.chat.isGroupChat ? (
+                    <>
+                      New Message in&nbsp;
+                      <b style={{ color: "var(--primary)" }}>
+                        {n.chat.chatName}
+                      </b>
+                    </>
+                  ) : (
+                    <>
+                      <b style={{ color: "var(--primary)" }}>
+                        {getSender(user, n.chat.users)}
+                      </b>
+                      &nbsp; just messaged you
+                    </>
+                  )}
                 </MenuItem>
               ))}
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: "10px",
+                }}
+              >
+                <Button size="xs" onClick={() => setNotifications([])}>
+                  Clear All
+                </Button>
+              </div>
             </MenuList>
           </Menu>
 

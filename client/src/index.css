@@ -20,4 +20,5 @@ body {
 :root {
   --theme: #252b48;
   --theme_2: #445069;
+  --primary: rgb(105, 108, 255);
 }

@@ -14,7 +14,7 @@ import Signup from "../../components/authentication/signup/Signup";
 const Home = () => {
   return (
     <Container maxW="xl">
-      <Box p="3" w="100%" m="40px 0 15px 0" borderRadius="lg">
+      <Box p="3" w="100%" m="40px 0 15px 0" borderRadius="3px">
         <Text
           style={{ textAlign: "center", color: "var(--theme)" }}
           fontSize="4xl"
@@ -30,7 +30,7 @@ const Home = () => {
         p="3"
         m="40px 0 15px 0"
         borderWidth="1px "
-        borderRadius="lg"
+        borderRadius="3px"
         boxShadow="lg"
       >
         <Tabs variant="soft-rounded">
